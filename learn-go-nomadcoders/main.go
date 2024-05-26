@@ -3,42 +3,32 @@ package main
 import (
 	"fmt"
 
-	mydict "github.com/olcw78/yt/learn-go-nomadcoders/dict"
+	urlchecker "github.com/olcw78/yt/learn-go-nomadcoders/url-checker"
 )
 
 func main() {
-	// account := accounts.NewAccount("yoon")
-	// account.Deposit(1000)
-
-	// if err := account.Withdraw(1001); err != nil {
-	// 	fmt.Println(err)
-	// }
-	// fmt.Println(account)
-
-	dict := mydict.Dictionary{"first": "apple"}
-	if v, err := dict.Search("first"); err != nil {
-		fmt.Println(err)
-	} else {
-		fmt.Println(v)
+	var results = make(map[string]string)
+	urls := []string{
+		"https://www.airbnb.com/",
+		"https://www.google.com/",
+		"https://www.amazon.com/",
+		"https://www.reddit.com/",
+		"https://www.google.com/",
+		"https://www.soundcloud.com/",
+		"https://www.facebook.com/",
+		"https://www.instagram.com/",
+		"https://www.academy.nomadcoders.co/",
 	}
 
-	dict.Add("second", "orange")
-	if v, err := dict.Search("second"); err != nil {
-		fmt.Println(err)
-	} else {
-		fmt.Println(v)
+	for _, url := range urls {
+		res := "OK"
+		if err := urlchecker.HitURL(url); err != nil {
+			res = "NO"
+		}
+		results[url] = res
 	}
 
-	word := "hello"
-	definition := "Greeting"
-
-	if err := dict.Add(word, definition); err != nil {
-		fmt.Println(err)
-	}
-
-	if hello, err := dict.Search(word); err != nil {
-		fmt.Println(err)
-	} else {
-		fmt.Println(hello)
+	for url, result := range results {
+		fmt.Println(url, result)
 	}
 }
